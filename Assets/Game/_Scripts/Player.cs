@@ -8,7 +8,13 @@ public class Player : MonoBehaviour
     CharacterController _controller;
 
     [SerializeField]
-    GameObject _muzzleFlash;
+    GameObject _muzzleFlash, hitMarkerPrefab;
+
+    [SerializeField]
+    AudioSource _audioSource;
+
+    [SerializeField]
+    AudioClip _laserShootSound;
 
     [SerializeField]
     float _moveSpeed = 1.5f;
@@ -39,11 +45,20 @@ public class Player : MonoBehaviour
             }
 
             _muzzleFlash.SetActive(true);
+
+            if (_audioSource.isPlaying == false)
+            {
+                _audioSource.Play();
+            }
+
+            GameObject hitMarker = Instantiate(hitMarkerPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+            Destroy(hitMarker, 1f);
         }
 
         else
         {
             _muzzleFlash.SetActive(false);
+            _audioSource.Stop();
         }
     }
 
