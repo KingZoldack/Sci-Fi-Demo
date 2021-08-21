@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     CharacterController _controller;
 
     [SerializeField]
+    GameObject _muzzleFlash;
+
+    [SerializeField]
     float _moveSpeed = 1.5f;
 
     float _gravity = 9.81f;
@@ -24,7 +27,27 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
+
+        if (Input.GetMouseButton(0))
+        {
+            Ray rayOrigin = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            RaycastHit hitInfo;
+
+            if (Physics.Raycast(rayOrigin, out hitInfo))
+            {
+                Debug.Log("You shot: " + hitInfo.transform.name);
+            }
+
+            _muzzleFlash.SetActive(true);
+        }
+
+        else
+        {
+            _muzzleFlash.SetActive(false);
+        }
     }
+
+  
 
     private void CalculateMovement()
     {
