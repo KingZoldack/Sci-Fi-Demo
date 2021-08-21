@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     CharacterController _controller;
 
     [SerializeField]
-    GameObject _muzzleFlash, _hitMarkerPrefab, _coin;
+    GameObject _muzzleFlash, _hitMarkerPrefab, _coin, _weapon;
 
     [SerializeField]
     AudioSource _audioSource;
@@ -67,7 +67,10 @@ public class Player : MonoBehaviour
 
         if (hasCoin)
         {
+            if (_coin != null)
+            {
             _coin.SetActive(true);
+            }
         }
     }
 
@@ -110,5 +113,10 @@ public class Player : MonoBehaviour
         velocity = transform.transform.TransformDirection(velocity);
         velocity.y -= _gravity;
         _controller.Move(velocity * Time.deltaTime);
+    }
+
+    public void PurchasedWeapon()
+    {
+        _weapon.SetActive(true);
     }
 }

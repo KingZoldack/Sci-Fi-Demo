@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Coin : MonoBehaviour
 {
     [SerializeField]
-    Text pressEText;
+    public GameObject pressEText;
 
     [SerializeField]
 
@@ -22,12 +22,16 @@ public class Coin : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            pressEText.enabled = true;
+            if (pressEText != null)
+            {
+                pressEText.SetActive(true);
+            }
 
             if (Input.GetKeyDown("e"))
             {
                 _player.hasCoin = true;
                 _audioSource.Play();
+                Destroy(pressEText);
                 Destroy(this.gameObject, 0.5f);
             }
         }
@@ -37,7 +41,7 @@ public class Coin : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            pressEText.enabled = false;
+            pressEText.SetActive(false);
         }
     }
 }
