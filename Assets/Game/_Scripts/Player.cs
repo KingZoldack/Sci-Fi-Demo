@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     CharacterController _controller;
 
     [SerializeField]
-    GameObject _muzzleFlash, hitMarkerPrefab;
+    GameObject _muzzleFlash, _hitMarkerPrefab, _coin;
 
     [SerializeField]
     AudioSource _audioSource;
@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     public int _currentAmmo, _maxAmmo = 150;
 
     bool _isReloading = false;
+    public bool hasCoin = false;
 
     UIManager _uiManager;
 
@@ -63,6 +64,11 @@ public class Player : MonoBehaviour
             _muzzleFlash.SetActive(false);
             _audioSource.Stop();
         }
+
+        if (hasCoin)
+        {
+            _coin.SetActive(true);
+        }
     }
 
     private void Reload()
@@ -90,7 +96,7 @@ public class Player : MonoBehaviour
             _audioSource.Play();
         }
 
-        GameObject hitMarker = Instantiate(hitMarkerPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+        GameObject hitMarker = Instantiate(_hitMarkerPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
         Destroy(hitMarker, 1f);
     }
 
